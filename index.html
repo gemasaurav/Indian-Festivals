@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Indian Festivals – आइए सब मिलकर मनाएँ</title>
+  <style>
+    :root {
+      --saffron: #FF9933;
+      --white: #FFFFFF;
+      --green: #138808;
+      --navy: #000080;
+      --gold: #FFD700;
+      --pink: #FF69B4;
+      --purple: #8A2BE2;
+      --red: #DC143C;
+      --orange: #FF4500;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans Devanagari', 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #1a0533 0%, #2d1b4e 40%, #0f3460 100%);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding-bottom: 110px;
+      width: 100%;
+    }
+    .page.active {
+      display: block;
+      animation: pageSlideIn 0.28s ease-out;
+    }
+    @keyframes pageSlideIn {
+      from { opacity: 0; transform: translateX(40px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ===== FRONT ===== */
+    #front {
+      text-align: center;
+      padding: 40px 20px 100px;
+      background: linear-gradient(160deg, #FF9933 0%, #FF4500 25%, #8A2BE2 55%, #138808 85%, #000080 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #front h1 {
+      font-size: clamp(2.2rem, 8vw, 3.4rem);
+      font-weight: 800;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, #FFD700, #fff, #FFD700);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    #front .tagline {
+      font-size: 1.15rem;
+      opacity: 0.95;
+      margin-bottom: 28px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    .pic-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      max-width: 340px;
+      margin: 0 auto 32px;
+    }
+    .pic-grid span {
+      font-size: 2.4rem;
+      background: rgba(255,255,255,0.18);
+      border-radius: 16px;
+      padding: 12px 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+      animation: bounce 2.5s infinite ease-in-out;
+    }
+    .pic-grid span:nth-child(2) { animation-delay: 0.2s; }
+    .pic-grid span:nth-child(3) { animation-delay: 0.4s; }
+    .pic-grid span:nth-child(4) { animation-delay: 0.6s; }
+    .pic-grid span:nth-child(5) { animation-delay: 0.1s; }
+    .pic-grid span:nth-child(6) { animation-delay: 0.3s; }
+    .pic-grid span:nth-child(7) { animation-delay: 0.5s; }
+    .pic-grid span:nth-child(8) { animation-delay: 0.7s; }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 36px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(90deg, #FFD700, #FF9933);
+      color: #1a0533;
+      box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+    }
+    .btn:active { transform: scale(0.96); }
+
+    /* ===== INDEX ===== */
+    #index header {
+      background: linear-gradient(90deg, #FF9933, #DC143C, #8A2BE2);
+      padding: 18px 16px 14px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    #index header h2 { font-size: 1.45rem; font-weight: 800; }
+    #index header p { font-size: 0.85rem; opacity: 0.9; margin-top: 2px; }
+
+    .search-box {
+      padding: 12px 14px 8px;
+      max-width: 560px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 12px 16px 12px 42px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      outline: none;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .search-box input::placeholder { color: rgba(255,255,255,0.6); }
+    .search-box::before {
+      content: "🔍";
+      position: absolute;
+      left: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.1rem;
+      pointer-events: none;
+    }
+
+    .festival-list {
+      list-style: none;
+      padding: 8px 12px 20px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .festival-list li {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 14px;
+      margin-bottom: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .festival-list li:active { background: rgba(255,255,255,0.2); transform: scale(0.98); }
+    .festival-list .emoji { font-size: 1.9rem; min-width: 42px; text-align: center; }
+    .festival-list .info { flex: 1; }
+    .festival-list .name { font-weight: 700; font-size: 1.08rem; }
+    .festival-list .meta { font-size: 0.78rem; opacity: 0.8; margin-top: 2px; }
+    .festival-list .arrow { font-size: 1.2rem; opacity: 0.6; }
+    .no-result {
+      text-align: center;
+      padding: 40px 20px;
+      opacity: 0.7;
+      font-size: 1.05rem;
+    }
+
+    /* ===== DETAIL ===== */
+    #detail header {
+      background: linear-gradient(90deg, #8A2BE2, #DC143C, #FF9933);
+      padding: 16px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+    }
+    #detail header h2 { font-size: 1.35rem; font-weight: 800; }
+    #detail .content {
+      padding: 16px 16px 30px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .detail-card {
+      background: rgba(255,255,255,0.09);
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin-bottom: 14px;
+      border-left: 5px solid var(--gold);
+    }
+    .detail-card h3 {
+      font-size: 0.95rem;
+      color: #FFD700;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+    .detail-card p {
+      font-size: 0.98rem;
+      line-height: 1.55;
+      opacity: 0.95;
+    }
+    .hero-emoji {
+      text-align: center;
+      font-size: 4.2rem;
+      margin: 10px 0 18px;
+      text-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(15, 10, 40, 0.97);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 12px 8px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      z-index: 50;
+    }
+    .bottom-nav .btn-row {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .bottom-nav button {
+      flex: 1;
+      max-width: 160px;
+      padding: 11px 10px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin: 0 6px;
+    }
+    .btn-next {
+      background: linear-gradient(90deg, #FF9933, #FFD700);
+      color: #1a0533;
+    }
+    .btn-close {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25) !important;
+    }
+    #index .bottom-nav .btn-row { justify-content: center; }
+    #index .btn-close { max-width: 200px; }
+    .footer-credit {
+      width: 100%;
+      text-align: center;
+      font-size: 0.68rem;
+      opacity: 0.75;
+      padding: 2px 4px;
+      color: #ddd;
+    }
+    #front .footer-credit {
+      position: fixed;
+      bottom: 18px;
+      left: 0;
+      right: 0;
+      opacity: 0.85;
+      z-index: 40;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FRONT PAGE -->
+  <div id="front" class="page active">
+    <h1>Indian Festivals</h1>
+    <p class="tagline">✨ आइए सब मिलकर मनाएँ ✨</p>
+    <div class="pic-grid">
+      <span>🪔</span><span>🎨</span><span>🕌</span><span>🎄</span>
+      <span>🕉️</span><span>📿</span><span>☸️</span><span>🌾</span>
+    </div>
+    <button class="btn" onclick="showPage('index')">त्योहार सूची देखें →</button>
+    <div class="footer-credit">Designed and Developed by 100, 000 000 000</div>
+  </div>
+
+  <!-- INDEX PAGE -->
+  <div id="index" class="page">
+    <header>
+      <h2>🎉 भारतीय त्योहार सूची</h2>
+      <p>उत्तर से दक्षिण, पूर्व से पश्चिम – सबके त्योहार</p>
+    </header>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="त्योहार खोजें (नाम, धर्म, महीना...)" oninput="filterFestivals()" />
+    </div>
+    <ul class="festival-list" id="festivalList"></ul>
+    <div class="bottom-nav">
+      <div class="btn-row">
+        <button class="btn-close" onclick="showPage('front')">बंद करें</button>
+      </div>
+      <div class="footer-credit">Designed and Developed by 100, 000 000 000</div>
+    </div>
+  </div>
+
+  <!-- DETAIL PAGE -->
+  <div id="detail" class="page">
+    <header>
+      <h2 id="detailTitle">त्योहार</h2>
+    </header>
+    <div class="content" id="detailContent"></div>
+    <div class="bottom-nav">
+      <div class="btn-row">
+        <button class="btn-next" onclick="showPage('index')">सूची</button>
+        <button class="btn-close" onclick="showPage('front')">बंद करें</button>
+      </div>
+      <div class="footer-credit">Designed and Developed by 100, 000 000 000</div>
+    </div>
+  </div>
+
+<script>
+/* ===================== FESTIVAL DATA – English Calendar Order ===================== */
+const festivals = [
+  /* JANUARY */
+  {
+    id: 1, emoji: "🔥", name: "लोहड़ी",
+    date: "13 जनवरी", month: 1,
+    community: "सिख, हिंदू (पंजाबी)",
+    region: "पंजाब, हरियाणा, हिमाचल, दिल्ली",
+    why: "सर्दियों की समाप्ति और फसल की खुशी का पर्व।",
+    how: "आग के चारों ओर इकट्ठा होना, तिल-रेवड़ी-मूंगफली फेंकना, भांगड़ा-गिद्धा।",
+    mythology: "दुल्ला भट्टी नामक लोक नायक की कहानी जुड़ी है जो गरीब लड़कियों की शादी करवाता था।",
+    dantkatha: "लोहड़ी की रात आग में तिल-गुड़ डालकर मनोकामना पूरी होने की कामना की जाती है।"
+  },
+  {
+    id: 2, emoji: "☀️", name: "मकर संक्रांति",
+    date: "14/15 जनवरी (सूर्य मकर राशि में प्रवेश)", month: 1,
+    community: "हिंदू, सभी समुदाय (फसल पर्व)",
+    region: "पूरे भारत – उत्तर में लोहड़ी/माघी, गुजरात में उत्तरायण, तमिलनाडु में पोंगल, असम में बिहू",
+    why: "सूर्य के उत्तरायण होने और फसल कटने का पर्व।",
+    how: "तिल-गुड़ खाना, पतंगबाजी, स्नान, दान, खिचड़ी।",
+    mythology: "सूर्य देव की उपासना। भीष्म पितामह ने इसी दिन शरीर त्यागने का संकल्प लिया था।",
+    dantkatha: "गुजरात में पतंगबाजी का मेला विश्व प्रसिद्ध है।"
+  },
+  {
+    id: 3, emoji: "🍚", name: "पोंगल",
+    date: "14-17 जनवरी (थाई मास)", month: 1,
+    community: "हिंदू (तमिल)",
+    region: "तमिलनाडु, पुडुचेरी",
+    why: "फसल का त्योहार और सूर्य देव को धन्यवाद।",
+    how: "चार दिन – भोगी, सूर्य पोंगल, मट्टू पोंगल, कनुम पोंगल। नए चावल से पोंगल पकाना।",
+    mythology: "सूर्य देव की कृपा से अच्छी फसल होती है।",
+    dantkatha: "‘पोंगलो पोंगल’ कहकर बर्तन उफनने पर खुशी मनाई जाती है।"
+  },
+  {
+    id: 4, emoji: "🌾", name: "माघ बिहू (भोगाली बिहू)",
+    date: "14-15 जनवरी", month: 1,
+    community: "असमिया हिंदू",
+    region: "असम",
+    why: "फसल कटने की खुशी और भोग का पर्व।",
+    how: "मेजी जलाना, पारंपरिक भोजन, नृत्य-गीत।",
+    mythology: "कृषि पर आधारित असमिया संस्कृति का महत्वपूर्ण पर्व।",
+    dantkatha: "भोगाली का अर्थ है भोग और आनंद।"
+  },
+
+  /* FEBRUARY */
+  {
+    id: 5, emoji: "📚", name: "वसंत पंचमी / सरस्वती पूजा",
+    date: "माघ शुक्ल पंचमी (जनवरी-फरवरी)", month: 2,
+    community: "हिंदू",
+    region: "पूरे भारत, विशेषकर बंगाल, उत्तर भारत",
+    why: "ज्ञान की देवी सरस्वती की पूजा और वसंत का आगमन।",
+    how: "पीले कपड़े पहनना, सरस्वती पूजा, पुस्तकों की पूजा, बच्चे पढ़ना शुरू करते हैं।",
+    mythology: "देवी सरस्वती ब्रह्मा की पत्नी और विद्या की अधिष्ठात्री हैं।",
+    dantkatha: "इस दिन बच्चे को अक्षर ज्ञान कराने की परंपरा है।"
+  },
+  {
+    id: 6, emoji: "🌙", name: "महाशिवरात्रि",
+    date: "फाल्गुन कृष्ण चतुर्दशी (फरवरी-मार्च)", month: 2,
+    community: "हिंदू",
+    region: "पूरे भारत, विशेषकर काशी, उज्जैन, केदारनाथ",
+    why: "भगवान शिव और पार्वती के विवाह की रात तथा शिव की आराधना की सबसे पवित्र रात।",
+    how: "रातभर जागरण, शिवलिंग पर बेलपत्र-दूध-जल चढ़ाना, उपवास।",
+    mythology: "समुद्र मंथन के समय हलाहल विष निकला जिसे शिव ने कण्ठ में धारण किया।",
+    dantkatha: "जो इस रात जागकर शिव का नाम लेता है, उसे मोक्ष का मार्ग मिलता है।"
+  },
+
+  /* MARCH */
+  {
+    id: 7, emoji: "🎨", name: "होली",
+    date: "फाल्गुन पूर्णिमा (फरवरी-मार्च)", month: 3,
+    community: "मुख्यतः हिंदू, पूरे समाज द्वारा",
+    region: "पूरे भारत, विशेषकर उत्तर भारत (मथुरा-वृंदावन)",
+    why: "वसंत ऋतु का स्वागत और बुराई पर अच्छाई की जीत।",
+    how: "होलीका दहन, रंग-गुलाल खेलना, गुजिया, लोक गीत-नृत्य।",
+    mythology: "प्रह्लाद की रक्षा और होलिका के दहन की स्मृति। भगवान विष्णु ने नृसिंह रूप में हिरण्यकश्यप का वध किया।",
+    dantkatha: "वृंदावन में राधा-कृष्ण की होली और बरसाणा की लाठमार होली प्रसिद्ध हैं।"
+  },
+  {
+    id: 8, emoji: "⚔️", name: "होला मोहल्ला",
+    date: "होली के अगले दिन (फरवरी-मार्च)", month: 3,
+    community: "सिख",
+    region: "आनंदपुर साहिब (पंजाब)",
+    why: "गुरु गोबिंद सिंह जी द्वारा शुरू किया गया सैन्य अभ्यास और वीरता का पर्व।",
+    how: "नकाबी लड़ाई, तलवारबाजी, घुड़सवारी, कविता-वाणी, लंगर।",
+    mythology: "खालसा की सैन्य तैयारी और अनुशासन का प्रदर्शन।",
+    dantkatha: "‘सिख ओलंपिक्स’ कहा जाता है।"
+  },
+  {
+    id: 9, emoji: "🎏", name: "गुड़ी पड़वा / उगादी",
+    date: "चैत्र शुक्ल प्रतिपदा (मार्च-अप्रैल)", month: 3,
+    community: "हिंदू (मराठी, तेलुगु, कन्नड़)",
+    region: "महाराष्ट्र, आंध्र-तेलंगाना-कर्नाटक",
+    why: "हिंदू नववर्ष। ब्रह्मा जी द्वारा सृष्टि की रचना का दिन।",
+    how: "गुड़ी (ध्वज) लगाना, उगादी पच्चड़ी खाना, नए कपड़े, पूजा।",
+    mythology: "ब्रह्मा जी ने इसी दिन सृष्टि की रचना शुरू की।",
+    dantkatha: "उगादी पच्चड़ी जीवन के सभी स्वादों को स्वीकार करने का संदेश देती है।"
+  },
+  {
+    id: 10, emoji: "🏹", name: "राम नवमी",
+    date: "चैत्र शुक्ल नवमी (मार्च-अप्रैल)", month: 3,
+    community: "हिंदू",
+    region: "पूरे भारत, विशेषकर अयोध्या",
+    why: "भगवान राम का जन्मदिन।",
+    how: "मंदिरों में विशेष पूजा, रामचरितमानस पाठ, भजन, रथयात्रा।",
+    mythology: "अयोध्या में राजा दशरथ के यहाँ कौशल्या से राम का जन्म हुआ।",
+    dantkatha: "राम नवमी पर अयोध्या में लाखों श्रद्धालु पहुँचते हैं।"
+  },
+
+  /* APRIL */
+  {
+    id: 11, emoji: "🌾", name: "बैसाखी / वैशाखी",
+    date: "13/14 अप्रैल", month: 4,
+    community: "सिख और हिंदू (पंजाब)",
+    region: "पंजाब, हरियाणा, दिल्ली, सिख समुदाय विश्वभर",
+    why: "सिख नववर्ष, खालसा पंथ की स्थापना (1699) और रबी फसल का त्योहार।",
+    how: "गुरुद्वारों में अखंड पाठ, नगर कीर्तन, लंगर, भांगड़ा।",
+    mythology: "गुरु गोबिंद सिंह जी ने आनंदपुर साहिब में खालसा की स्थापना की।",
+    dantkatha: "जलियाँवाला बाग कांड भी बैसाखी के दिन हुआ था।"
+  },
+  {
+    id: 12, emoji: "🛕", name: "महावीर जयंती",
+    date: "चैत्र शुक्ल त्रयोदशी (मार्च-अप्रैल)", month: 4,
+    community: "जैन",
+    region: "पूरे भारत, विशेषकर गुजरात, राजस्थान, महाराष्ट्र",
+    why: "जैन धर्म के 24वें तीर्थंकर भगवान महावीर का जन्मदिन।",
+    how: "मंदिरों में अभिषेक, शोभायात्रा, दान, अहिंसा का संदेश।",
+    mythology: "भगवान महावीर का जन्म कुंडग्राम में हुआ। उन्होंने कैवल्य ज्ञान प्राप्त किया।",
+    dantkatha: "महावीर ने ‘अहिंसा परमो धर्मः’ का संदेश दिया।"
+  },
+  {
+    id: 13, emoji: "✝️", name: "गुड फ्राइडे एवं ईस्टर",
+    date: "ईस्टर से पहले का शुक्रवार; ईस्टर रविवार (मार्च-अप्रैल)", month: 4,
+    community: "ईसाई",
+    region: "पूरे भारत",
+    why: "ईसा मसीह के क्रूस पर चढ़ने (गुड फ्राइडे) और पुनर्जीवन (ईस्टर) की स्मृति।",
+    how: "चर्च सेवा, उपवास, क्रॉस का मार्ग, ईस्टर पर अंडे।",
+    mythology: "ईसा मसीह को क्रूस पर चढ़ाया गया, तीसरे दिन वे पुनर्जीवित हुए।",
+    dantkatha: "ईस्टर एग और ईस्टर बनी की परंपराएँ लोकप्रिय हैं।"
+  },
+  {
+    id: 14, emoji: "🌸", name: "वैशाखी बिहू (रोंगाली बिहू)",
+    date: "14-15 अप्रैल", month: 4,
+    community: "असमिया",
+    region: "असम",
+    why: "असमिया नववर्ष और वसंत का स्वागत।",
+    how: "बिहू नृत्य, गीत, पारंपरिक वस्त्र, भोज।",
+    mythology: "कृषि और प्रकृति से जुड़ा पर्व।",
+    dantkatha: "असम का सबसे रंगीन और जीवंत त्योहार।"
+  },
+
+  /* MAY */
+  {
+    id: 15, emoji: "☸️", name: "बुद्ध पूर्णिमा (वेसाक)",
+    date: "वैशाख पूर्णिमा (अप्रैल-मई)", month: 5,
+    community: "बौद्ध",
+    region: "पूरे भारत, विशेषकर बोधगया, सारनाथ, कुशीनगर, लद्दाख",
+    why: "गौतम बुद्ध के जन्म, ज्ञान प्राप्ति और महापरिनिर्वाण का दिन।",
+    how: "मंदिरों में पूजा, ध्यान, दान, दीप जलाना।",
+    mythology: "लुंबिनी में जन्म, बोधगया में ज्ञान, कुशीनगर में निर्वाण – तीनों पूर्णिमा को।",
+    dantkatha: "बुद्ध ने मध्यम मार्ग और चार आर्य सत्य का उपदेश दिया।"
+  },
+
+  /* JUNE-JULY */
+  {
+    id: 16, emoji: "🌊", name: "रथ यात्रा (जगन्नाथ)",
+    date: "आषाढ़ शुक्ल द्वितीया (जून-जुलाई)", month: 6,
+    community: "हिंदू",
+    region: "पुरी (ओडिशा) मुख्य, पूरे भारत में",
+    why: "भगवान जगन्नाथ, बलभद्र और सुभद्रा की रथ यात्रा।",
+    how: "तीन विशाल रथ खींचे जाते हैं, लाखों भक्त शामिल होते हैं।",
+    mythology: "भगवान जगन्नाथ अपने भक्तों से मिलने निकलते हैं।",
+    dantkatha: "पुरी की रथ यात्रा विश्व प्रसिद्ध है और यूनेस्को से जुड़ी है।"
+  },
+  {
+    id: 17, emoji: "🙏", name: "गुरु पूर्णिमा",
+    date: "आषाढ़ पूर्णिमा (जून-जुलाई)", month: 7,
+    community: "हिंदू, बौद्ध, जैन",
+    region: "पूरे भारत",
+    why: "गुरु के प्रति कृतज्ञता और सम्मान का दिन।",
+    how: "गुरु की पूजा, प्रणाम, दान, प्रवचन।",
+    mythology: "व्यास जी का जन्मदिन भी माना जाता है।",
+    dantkatha: "‘गुरु गोविंद दोनों खड़े, काके लागू पायँ’ – गुरु को सर्वोच्च माना जाता है।"
+  },
+
+  /* AUGUST */
+  {
+    id: 18, emoji: "🎀", name: "रक्षाबंधन",
+    date: "श्रावण पूर्णिमा (जुलाई-अगस्त)", month: 8,
+    community: "हिंदू, सिख",
+    region: "पूरे भारत, विशेषकर उत्तर भारत",
+    why: "भाई-बहन के पवित्र प्रेम और सुरक्षा का प्रतीक।",
+    how: "बहन राखी बाँधती है, तिलक लगाती है; भाई उपहार और रक्षा का वचन देता है।",
+    mythology: "द्रौपदी ने कृष्ण की उँगली पर साड़ी का टुकड़ा बाँधा था।",
+    dantkatha: "रानी कर्णावती ने हुमायूँ को राखी भेजी थी।"
+  },
+  {
+    id: 19, emoji: "🌸", name: "ओणम",
+    date: "चिंगम मास – थिरुवोणम (अगस्त-सितंबर)", month: 8,
+    community: "हिंदू (केरल), सभी केरलवासी",
+    region: "केरल",
+    why: "राजा महाबली के स्वर्ग से पृथ्वी पर आने का स्वागत।",
+    how: "पूकलम, ओणम सद्या, वल्लम कली, कथकली, पुलिकली।",
+    mythology: "विष्णु ने वामन अवतार लेकर महाबली को पाताल भेजा, पर हर वर्ष आने की अनुमति दी।",
+    dantkatha: "महाबली के शासन में सभी समान और समृद्ध थे।"
+  },
+  {
+    id: 20, emoji: "🪈", name: "जन्माष्टमी",
+    date: "भाद्रपद कृष्ण अष्टमी (जुलाई-अगस्त)", month: 8,
+    community: "हिंदू",
+    region: "पूरे भारत, विशेषकर मथुरा-वृंदावन, महाराष्ट्र",
+    why: "भगवान कृष्ण के जन्म का उत्सव।",
+    how: "उपवास, झूलन, भजन, दही हांडी।",
+    mythology: "कंस के कारागार में देवकी-वसुदेव से कृष्ण का जन्म हुआ।",
+    dantkatha: "कृष्ण की बाललीलाएँ – माखन चोरी और रासलीला बहुत प्रिय हैं।"
+  },
+  {
+    id: 21, emoji: "🕊️", name: "पर्युषण / दशलक्षण पर्व",
+    date: "भाद्रपद (अगस्त-सितंबर) – 8 या 10 दिन", month: 8,
+    community: "जैन",
+    region: "गुजरात, राजस्थान, महाराष्ट्र, दिल्ली",
+    why: "क्षमा, तपस्या और आत्मशुद्धि का पर्व।",
+    how: "उपवास, प्रवचन, अंतिम दिन ‘मिच्छामि दुक्कडम्’ कहकर क्षमा माँगना।",
+    mythology: "जैन धर्म में कर्मों का क्षय और अहिंसा पर जोर।",
+    dantkatha: "‘मिच्छामि दुक्कडम्’ – यदि मैंने अपराध किया हो तो क्षमा करें।"
+  },
+
+  /* SEPTEMBER */
+  {
+    id: 22, emoji: "🐘", name: "गणेश चतुर्थी",
+    date: "भाद्रपद शुक्ल चतुर्थी (अगस्त-सितंबर)", month: 9,
+    community: "हिंदू",
+    region: "महाराष्ट्र, गोवा, कर्नाटक, तेलंगाना, आंध्र",
+    why: "भगवान गणेश के जन्मदिवस का उत्सव।",
+    how: "मूर्ति स्थापना, 1-11 दिन पूजा, प्रसाद, विसर्जन।",
+    mythology: "पार्वती ने गणेश को बनाया, शिव ने सिर काट कर हाथी का सिर लगाया।",
+    dantkatha: "बाल गंगाधर तिलक ने इसे सार्वजनिक उत्सव बनाया।"
+  },
+  {
+    id: 23, emoji: "🕉️", name: "नवरात्रि (शरद)",
+    date: "आश्विन शुक्ल पक्ष – नौ रातें (सितंबर-अक्टूबर)", month: 9,
+    community: "हिंदू",
+    region: "पूरे भारत, विशेषकर गुजरात (गरबा), बंगाल",
+    why: "देवी दुर्गा और नवदुर्गा की आराधना।",
+    how: "घट स्थापना, उपवास, गरबा-डांडिया, कन्या पूजन।",
+    mythology: "देवी दुर्गा ने महिषासुर से युद्ध कर विजय प्राप्त की।",
+    dantkatha: "गुजरात में गरबा रातभर चलता है।"
+  },
+
+  /* OCTOBER */
+  {
+    id: 24, emoji: "🦁", name: "दुर्गा पूजा",
+    date: "आश्विन शुक्ल (सितंबर-अक्टूबर)", month: 10,
+    community: "हिंदू (बंगाली मुख्य)",
+    region: "पश्चिम बंगाल, असम, ओडिशा, त्रिपुरा",
+    why: "देवी दुर्गा द्वारा महिषासुर वध की विजय।",
+    how: "पंडालों में भव्य मूर्ति, सांस्कृतिक कार्यक्रम, सिंदूर खेल, विसर्जन।",
+    mythology: "देवी दुर्गा ने महिषासुर का वध किया।",
+    dantkatha: "कोलकाता की दुर्गा पूजा UNESCO की अमूर्त सांस्कृतिक धरोहर में शामिल है।"
+  },
+  {
+    id: 25, emoji: "🏹", name: "दशहरा / विजयादशमी",
+    date: "आश्विन शुक्ल दशमी (सितंबर-अक्टूबर)", month: 10,
+    community: "हिंदू",
+    region: "पूरे भारत, विशेषकर मैसूर, दिल्ली, UP",
+    why: "भगवान राम द्वारा रावण पर विजय और देवी दुर्गा की विजय।",
+    how: "रामलिला, रावण पुतले जलाना, शस्त्र पूजा।",
+    mythology: "रामायण के अनुसार राम ने रावण का वध किया।",
+    dantkatha: "मैसूर दशहरा विश्व प्रसिद्ध है।"
+  },
+  {
+    id: 26, emoji: "🌕", name: "करवा चौथ",
+    date: "कार्तिक कृष्ण चतुर्थी (अक्टूबर-नवंबर)", month: 10,
+    community: "हिंदू (विवाहित महिलाएँ)",
+    region: "उत्तर भारत – पंजाब, हरियाणा, दिल्ली, राजस्थान, UP",
+    why: "पति की लंबी आयु और सुख के लिए व्रत।",
+    how: "सूर्योदय से चंद्रमा तक निर्जला व्रत, छलनी से चंद्रमा देखना।",
+    mythology: "करवा नामक स्त्री ने पति को यमराज से बचाया।",
+    dantkatha: "सास-बहू मिलकर व्रत करती हैं।"
+  },
+
+  /* NOVEMBER */
+  {
+    id: 27, emoji: "🪔", name: "दीपावली (दिवाली)",
+    date: "कार्तिक अमावस्या (अक्टूबर-नवंबर)", month: 11,
+    community: "हिंदू, जैन, सिख (कुछ स्तर पर)",
+    region: "पूरे भारत",
+    why: "अंधकार पर प्रकाश की, बुराई पर अच्छाई की जीत। राम के अयोध्या लौटने और लक्ष्मी पूजा।",
+    how: "दीये, लक्ष्मी-गणेश पूजा, पटाखे, मिठाई, रंगोली। पाँच दिन का पर्व।",
+    mythology: "भगवान राम 14 वर्ष बाद अयोध्या लौटे। जैन मत में महावीर का निर्वाण।",
+    dantkatha: "लक्ष्मी जी उस घर में निवास करती हैं जहाँ स्वच्छता और भक्ति होती है।"
+  },
+  {
+    id: 28, emoji: "🌅", name: "छठ पूजा",
+    date: "कार्तिक शुक्ल षष्ठी (अक्टूबर-नवंबर)", month: 11,
+    community: "हिंदू (बिहार, झारखंड, पूर्वी UP)",
+    region: "बिहार, झारखंड, पूर्वी उत्तर प्रदेश, नेपाल तराई",
+    why: "सूर्य देव और छठी मैया की उपासना।",
+    how: "चार दिन का कठोर व्रत, नदी किनारे अर्घ्य।",
+    mythology: "सूर्य की उपासना वैदिक काल से। द्रौपदी ने भी छठ रखा था।",
+    dantkatha: "व्रती बिना नमक-प्याज के भोजन करते हैं।"
+  },
+  {
+    id: 29, emoji: "🙏", name: "गुरु नानक जयंती (गुरुपुरब)",
+    date: "कार्तिक पूर्णिमा (अक्टूबर-नवंबर)", month: 11,
+    community: "सिख",
+    region: "पूरे भारत, विशेषकर पंजाब",
+    why: "गुरु नानक देव जी का जन्मदिन।",
+    how: "प्रभात फेरी, अखंड पाठ, नगर कीर्तन, लंगर।",
+    mythology: "गुरु नानक जी का जन्म तलवंडी में हुआ। ‘एक ओंकार’ का संदेश।",
+    dantkatha: "बचपन से सत्य और समानता का मार्ग दिखाया।"
+  },
+
+  /* DECEMBER */
+  {
+    id: 30, emoji: "🎄", name: "क्रिसमस",
+    date: "25 दिसंबर", month: 12,
+    community: "ईसाई",
+    region: "पूरे भारत, विशेषकर गोवा, केरल, पूर्वोत्तर",
+    why: "ईसा मसीह के जन्म का उत्सव।",
+    how: "मिडनाइट मास, क्रिसमस ट्री, उपहार, कैरोल्स, केक।",
+    mythology: "बैतलहम में मरियम से ईसा मसीह का जन्म।",
+    dantkatha: "सांता क्लॉज़ बच्चों को उपहार देते हैं।"
+  },
+
+  /* Islamic (variable dates) – placed near end of year for list order */
+  {
+    id: 31, emoji: "🌙", name: "ईद-उल-फितर (मीठी ईद)",
+    date: "रमजान के बाद शव्वाल 1 (चांद देखने पर)", month: 13,
+    community: "मुस्लिम",
+    region: "पूरे भारत और विश्व",
+    why: "रमजान के रोज़े के बाद खुशी का पर्व।",
+    how: "ईद नमाज, ज़कात, सेवइयाँ, गले मिलना, दान।",
+    mythology: "रमजान में कुरान का अवतरण। ईद अल्लाह का शुक्र अदा करने का दिन।",
+    dantkatha: "चांद देखने की खुशी और ‘ईद मुबारक’ की बधाइयाँ।"
+  },
+  {
+    id: 32, emoji: "🐑", name: "ईद-उल-अजहा (बकरीद)",
+    date: "जिलहिज्ज की 10 तारीख", month: 13,
+    community: "मुस्लिम",
+    region: "पूरे भारत",
+    why: "हज़रत इब्राहीम की कुरबानी की याद।",
+    how: "ईद नमाज, कुरबानी, मांस बाँटना।",
+    mythology: "इब्राहीम ने बेटे की कुरबानी के लिए तैयार हो गए, अल्लाह ने मेढ़े से बदल दिया।",
+    dantkatha: "हज के दिनों में मनाया जाता है।"
+  },
+  {
+    id: 33, emoji: "🖤", name: "मुहर्रम (आशूरा)",
+    date: "मुहर्रम माह की 10 तारीख", month: 13,
+    community: "मुस्लिम (विशेषकर शिया)",
+    region: "पूरे भारत, लखनऊ, हैदराबाद",
+    why: "कर्बला में इमाम हुसैन की शहादत की याद।",
+    how: "मातम, ताज़िया जुलूस, शोक सभाएँ।",
+    mythology: "सन 680 ई. में इमाम हुसैन कर्बला में शहीद हुए।",
+    dantkatha: "‘या हुसैन’ के नारे और ताज़िया की परंपरा।"
+  },
+  {
+    id: 34, emoji: "🕌", name: "मीलाद-उन-नबी (बारावफ़ात)",
+    date: "रबी-उल-अव्वल की 12 तारीख", month: 13,
+    community: "मुस्लिम",
+    region: "पूरे भारत",
+    why: "पैगंबर मुहम्मद साहब का जन्मदिन।",
+    how: "मिलाद की सभाएँ, कव्वाली, दान, प्रवचन।",
+    mythology: "पैगंबर साहब का जन्म मक्का में हुआ।",
+    dantkatha: "भारत में कई जगह जुलूस भी निकाले जाते हैं।"
+  },
+
+  /* More regional */
+  {
+    id: 35, emoji: "🎭", name: "होली (लठमार / वृंदावन)",
+    date: "फाल्गुन (फरवरी-मार्च)", month: 3,
+    community: "हिंदू",
+    region: "बरसाणा, नंदगाँव, वृंदावन (UP)",
+    why: "राधा-कृष्ण की होली की विशेष परंपरा।",
+    how: "लाठियाँ और ढाल से खेल, रंग, भजन।",
+    mythology: "राधा और गोपियों द्वारा कृष्ण पर लाठी चलाने की लीला।",
+    dantkatha: "बरसाणा की लठमार होली दुनिया भर में प्रसिद्ध है।"
+  },
+  {
+    id: 36, emoji: "🌺", name: "तीज / हरितालिका तीज",
+    date: "भाद्रपद शुक्ल तृतीया (अगस्त-सितंबर)", month: 8,
+    community: "हिंदू (महिलाएँ)",
+    region: "राजस्थान, उत्तर भारत, नेपाल",
+    why: "पार्वती जी की तरह सुहाग और सौभाग्य के लिए व्रत।",
+    how: "निर्जला व्रत, झूला, मेहंदी, सोलह शृंगार।",
+    mythology: "पार्वती ने शिव को पति रूप में पाने के लिए कठोर तप किया।",
+    dantkatha: "राजस्थान में तीज का मेला बहुत भव्य होता है।"
+  },
+  {
+    id: 37, emoji: "🪔", name: "कार्तिक पूर्णिमा / देव दीपावली",
+    date: "कार्तिक पूर्णिमा (नवंबर)", month: 11,
+    community: "हिंदू",
+    region: "वाराणसी, पुष्कर, पूरे भारत",
+    why: "देवताओं द्वारा दीप जलाने का पर्व। गंगा स्नान।",
+    how: "घाटों पर दीपदान, स्नान, पूजा।",
+    mythology: "त्रिपुरासुर वध के बाद देवताओं ने दीप जलाए।",
+    dantkatha: "वाराणसी की देव दीपावली अत्यंत भव्य होती है।"
+  },
+  {
+    id: 38, emoji: "🕉️", name: "हनुमान जयंती",
+    date: "चैत्र पूर्णिमा (मार्च-अप्रैल) / कुछ जगह कार्तिक", month: 4,
+    community: "हिंदू",
+    region: "पूरे भारत",
+    why: "भगवान हनुमान का जन्मदिन।",
+    how: "मंदिरों में विशेष पूजा, सुंदरकांड पाठ, प्रसाद।",
+    mythology: "अंजनी और पवन देव से हनुमान का जन्म।",
+    dantkatha: "हनुमान जी राम भक्त और शक्ति के प्रतीक हैं।"
+  },
+  {
+    id: 39, emoji: "🌾", name: "ओणम (थिरुवोणम) – केरल",
+    date: "अगस्त-सितंबर", month: 8,
+    community: "केरल के सभी समुदाय",
+    region: "केरल",
+    why: "राजा महाबली का स्वागत।",
+    how: "10 दिन का उत्सव, फूलों की सजावट, सद्या भोज।",
+    mythology: "महाबली की लोकप्रियता और वामन अवतार।",
+    dantkatha: "केरल का सबसे बड़ा त्योहार।"
+  },
+  {
+    id: 40, emoji: "🎉", name: "गुड़ी पड़वा (मराठी नववर्ष)",
+    date: "चैत्र शुक्ल प्रतिपदा", month: 3,
+    community: "मराठी हिंदू",
+    region: "महाराष्ट्र, गोवा",
+    why: "मराठी नववर्ष और विक्रम संवत का आरंभ।",
+    how: "गुड़ी लगाना, पुरण पोली, पूजा।",
+    mythology: "ब्रह्मा की सृष्टि रचना और राम की अयोध्या वापसी से जुड़ा।",
+    dantkatha: "गुड़ी को विजय का प्रतीक माना जाता है।"
+  },
+  {
+    id: 41, emoji: "👩‍👧", name: "जितिया (जीवित्पुत्रिका व्रत)",
+    date: "आश्विन कृष्ण अष्टमी (सितंबर-अक्टूबर)", month: 9,
+    community: "हिंदू (माएँ)",
+    region: "बिहार, झारखंड, पूर्वी उत्तर प्रदेश, नेपाल तराई",
+    why: "पुत्र की लंबी आयु और सुख के लिए माताएँ निर्जला व्रत रखती हैं।",
+    how: "निर्जला व्रत, जिमिकंद (suran) की पूजा, कहानी सुनना, अगले दिन पारण।",
+    mythology: "एक ब्राह्मणी ने पुत्र की रक्षा के लिए कठोर व्रत रखा था। जितिया माता की आराधना।",
+    dantkatha: "बिहार में जितिया बहुत बड़ी धूमधाम से मनाया जाता है और माएँ पूरे दिन बिना पानी के रहती हैं।"
+  },
+  {
+    id: 42, emoji: "📜", name: "अनंत चतुर्दशी",
+    date: "भाद्रपद शुक्ल चतुर्दशी (अगस्त-सितंबर)", month: 9,
+    community: "हिंदू",
+    region: "पूरे भारत, विशेषकर महाराष्ट्र, गुजरात, उत्तर भारत",
+    why: "भगवान विष्णु के अनंत रूप की पूजा और अनंत सूत्र बाँधने का पर्व।",
+    how: "अनंत धागा (सूत्र) बाँधना, विष्णु पूजा, व्रत, गणेश विसर्जन भी अक्सर इसी दिन होता है।",
+    mythology: "भगवान विष्णु ने अनंत नाग पर शयन किया। सुंद और उपसुंद की कथा से जुड़ा।",
+    dantkatha: "अनंत सूत्र बाँधने से जीवन की समस्याओं का अंत होता है – ऐसी मान्यता है।"
+  },
+  {
+    id: 43, emoji: "🛠️", name: "विश्वकर्मा पूजा",
+    date: "कहीं-कहीं 17 सितंबर या कार्तिक / भाद्रपद (औद्योगिक क्षेत्रों में)", month: 9,
+    community: "हिंदू (कारीगर, मजदूर, इंजीनियर)",
+    region: "पूरे भारत, विशेषकर पश्चिम बंगाल, झारखंड, बिहार, फैक्टरियाँ",
+    why: "शिल्प और वास्तुकला के देवता विश्वकर्मा की पूजा। औजारों और मशीनों की पूजा।",
+    how: "औजार, मशीन, वाहन साफ करके पूजा, छुट्टी, भोज।",
+    mythology: "विश्वकर्मा देवताओं के वास्तुकार और शिल्पी हैं। उन्होंने स्वर्ग की रचना की।",
+    dantkatha: "फैक्टरियों और वर्कशॉप में इस दिन काम बंद रहता है और औजारों की पूजा होती है।"
+  },
+  {
+    id: 44, emoji: "🪔", name: "गोवर्धन पूजा / अन्नकूट",
+    date: "कार्तिक शुक्ल प्रतिपदा (दीवाली के अगले दिन)", month: 11,
+    community: "हिंदू",
+    region: "पूरे भारत, विशेषकर मथुरा-वृंदावन, गुजरात, राजस्थान",
+    why: "भगवान कृष्ण द्वारा गोवर्धन पर्वत उठाने और इंद्र के अहंकार को चूर करने की स्मृति।",
+    how: "गोवर्धन की पूजा (गोबर या फूलों से पर्वत बनाना), अन्नकूट ( intercepts भोग), गायों की पूजा।",
+    mythology: "कृष्ण ने इंद्र की पूजा बंद करवाई और गोवर्धन को छाता बनाकर गाँव की रक्षा की।",
+    dantkatha: "अन्नकूट में तरह-तरह के व्यंजन भगवान को भोग लगाए जाते हैं।"
+  },
+  {
+    id: 45, emoji: "🤝", name: "भाई दूज (यम द्वितीया)",
+    date: "कार्तिक शुक्ल द्वितीया (दीवाली के दो दिन बाद)", month: 11,
+    community: "हिंदू",
+    region: "पूरे भारत, विशेषकर उत्तर भारत, महाराष्ट्र (भाऊबीज)",
+    why: "भाई-बहन के प्रेम का पर्व। बहन भाई की आरती उतारती है।",
+    how: "बहन भाई को तिलक लगाती है, मिठाई खिलाती है; भाई उपहार देता है।",
+    mythology: "यमराज अपनी बहन यमी से मिले थे। कृष्ण ने सुभद्रा के यहाँ जाकर भाई दूज मनाया।",
+    dantkatha: "इस दिन बहन के घर जाना और उसका खाना खाना बहुत शुभ माना जाता है।"
+  },
+  {
+    id: 46, emoji: "📝", name: "चित्रगुप्त पूजा",
+    date: "कार्तिक शुक्ल द्वितीया (भाई दूज के दिन) या यम द्वितीया", month: 11,
+    community: "हिंदू (कायस्थ समुदाय मुख्य)",
+    region: "उत्तर प्रदेश, बिहार, मध्य प्रदेश, दिल्ली",
+    why: "धर्मराज के लेखक चित्रगुप्त की पूजा। लेखनी और खातों की पूजा।",
+    how: "कलम-दवात की पूजा, कायस्थ समाज में विशेष व्रत और भोज।",
+    mythology: "चित्रगुप्त यमराज के सहायक हैं जो कर्मों का हिसाब रखते हैं। ब्रह्मा जी ने उन्हें उत्पन्न किया।",
+    dantkatha: "कायस्थ समुदाय इसे अपना मुख्य पर्व मानता है और इस दिन नई बही-खाता शुरू करते हैं।"
+  },
+  {
+    id: 47, emoji: "🌿", name: "तुलसी विवाह",
+    date: "कार्तिक शुक्ल एकादशी / द्वादशी (अक्टूबर-नवंबर)", month: 11,
+    community: "हिंदू",
+    region: "पूरे भारत, विशेषकर महाराष्ट्र, गुजरात, उत्तर भारत",
+    why: "तुलसी के पौधे का भगवान विष्णु (शालिग्राम) से विवाह। प्रबोधिनी एकादशी से जुड़ा।",
+    how: "तुलसी के गमले की सजावट, शालिग्राम या विष्णु की मूर्ति से विवाह संस्कार, आरती, प्रसाद।",
+    mythology: "वृंदा (तुलसी) और जालंधर की कथा। विष्णु ने तुलसी को पत्नी रूप में स्वीकार किया।",
+    dantkatha: "तुलसी विवाह के बाद ही शादियाँ शुरू होती हैं – ऐसी परंपरा कई जगह है।"
+  }
+];
+
+let currentIndex = 0;
+
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(p => {
+    p.classList.remove('active');
+    p.style.display = 'none';
+  });
+  const target = document.getElementById(pageId);
+  target.style.display = 'block';
+  target.classList.add('active');
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  if (pageId === 'index') {
+    document.getElementById('searchInput').value = '';
+    renderList(festivals);
+  }
+}
+
+function renderList(list) {
+  const ul = document.getElementById('festivalList');
+  if (!list || list.length === 0) {
+    ul.innerHTML = '<div class="no-result">कोई त्योहार नहीं मिला 🔍</div>';
+    return;
+  }
+  ul.innerHTML = list.map((f) => {
+    const realIndex = festivals.findIndex(x => x.id === f.id);
+    return `
+    <li onclick="openFestival(${realIndex})">
+      <span class="emoji">${f.emoji}</span>
+      <div class="info">
+        <div class="name">${f.name}</div>
+        <div class="meta">${f.date} · ${f.community}</div>
+      </div>
+      <span class="arrow">›</span>
+    </li>`;
+  }).join('');
+}
+
+function filterFestivals() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  if (!q) {
+    renderList(festivals);
+    return;
+  }
+  const filtered = festivals.filter(f =>
+    f.name.toLowerCase().includes(q) ||
+    f.community.toLowerCase().includes(q) ||
+    f.region.toLowerCase().includes(q) ||
+    f.date.toLowerCase().includes(q) ||
+    (f.why && f.why.toLowerCase().includes(q))
+  );
+  renderList(filtered);
+}
+
+function openFestival(index) {
+  currentIndex = index;
+  const f = festivals[index];
+  document.getElementById('detailTitle').textContent = f.name;
+  document.getElementById('detailContent').innerHTML = `
+    <div class="hero-emoji">${f.emoji}</div>
+    <div class="detail-card"><h3>📅 विशेष तिथि</h3><p>${f.date}</p></div>
+    <div class="detail-card"><h3>👥 मुख्यतः कौन मनाता है</h3><p>${f.community}</p></div>
+    <div class="detail-card"><h3>🗺️ देश के किस भाग में</h3><p>${f.region}</p></div>
+    <div class="detail-card"><h3>❓ क्यों मनाया जाता है</h3><p>${f.why}</p></div>
+    <div class="detail-card"><h3>🎉 कैसे मनाया जाता है</h3><p>${f.how}</p></div>
+    <div class="detail-card"><h3>📖 पौराणिक कथा / महत्व</h3><p>${f.mythology}</p></div>
+    <div class="detail-card"><h3>🗣️ दंतकथाएँ (यदि कोई)</h3><p>${f.dantkatha}</p></div>
+  `;
+  showPage('detail');
+}
+
+// Initial
+renderList(festivals);
+</script>
+</body>
+</html>
